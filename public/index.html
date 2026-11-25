@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NOOR &amp; SILK — Pakistan 3D Intimates &amp; Bridal Trousseau Atelier</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/styles.css" />
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "/vendor/three/build/three.module.js",
+          "three/addons/": "/vendor/three/examples/jsm/"
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <!-- First-Visit 3D Luxury Welcome Experience -->
+    <div class="welcome-overlay" id="welcomeOverlay" role="dialog" aria-modal="true" aria-labelledby="welcomeTitle">
+      <div class="welcome-aurora"></div>
+      <div class="welcome-card">
+        <div class="welcome-3d-pane">
+          <canvas id="welcome3dCanvas" class="three-canvas" aria-label="3D Welcome Atelier Showcase"></canvas>
+          <div class="welcome-3d-tag">LIVE 360° 3D ATELIER</div>
+        </div>
+
+        <div class="welcome-content-pane">
+          <p class="welcome-eyebrow">ASSALAM-O-ALAIKUM &bull; LAHORE &bull; KARACHI &bull; ISLAMABAD</p>
+          <h1 class="welcome-title" id="welcomeTitle">
+            Welcome to <em>NOOR &amp; SILK</em>
+          </h1>
+          <p class="welcome-lead">
+            Step into Pakistan&apos;s first <strong>3D Women&apos;s Fashion &amp; Intimates Atelier</strong>.
+            Spin every piece in 360°—from bridal lehengas, silk nighties, bras &amp; panties to Zara-style
+            shirts, baggy trousers, shawls, shoes, earrings &amp; Fogg/Janan perfumes.
+          </p>
+
+          <div class="welcome-perks-row">
+            <div class="welcome-perk-chip">
+              <strong>10% OFF</strong>
+              <span>Auto-applied for everyone</span>
+            </div>
+            <div class="welcome-perk-chip">
+              <strong>32+ 3D Items</strong>
+              <span>A to Z Women&apos;s Edit</span>
+            </div>
+            <div class="welcome-perk-chip">
+              <strong>Discreet COD</strong>
+              <span>All across Pakistan</span>
+            </div>
+          </div>
+
+          <div class="welcome-quick-doors">
+            <span class="doors-label">Jump straight to:</span>
+            <div class="doors-pills">
+              <button type="button" class="door-pill" data-welcome-cat="perfumes">Perfumes</button>
+              <button type="button" class="door-pill" data-welcome-cat="clothes">Shirts &amp; Baggy Trousers</button>
+              <button type="button" class="door-pill" data-welcome-cat="bridal-clothes">Bridal Lehenga</button>
+              <button type="button" class="door-pill" data-welcome-cat="nighties">Nighties</button>
+              <button type="button" class="door-pill" data-welcome-cat="bras">Bras &amp; Panties</button>
+              <button type="button" class="door-pill" data-welcome-cat="footwear">Shoes &amp; Sandals</button>
+            </div>
+          </div>
+
+          <div class="welcome-cta-row">
+            <button type="button" class="btn-primary welcome-enter-btn" id="enterAtelierBtn">
+              Enter 3D Boutique &rarr;
+            </button>
+            <button type="button" class="welcome-signin-btn" id="welcomeSignInBtn">
+              Member Sign In
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="announcement-bar">
+      <span>10% OFF For Everyone (Auto-Applied at Checkout) &bull; Discreet Cash on Delivery Across Pakistan &bull; Free Delivery over Rs. 7,500</span>
+    </div>
+
+    <header class="site-header" id="top">
+      <div class="header-inner">
+        <a href="#top" class="brand-logo" aria-label="NOOR & SILK Home">
+          <span class="brand-mark">NOOR &amp; SILK</span>
+          <span class="brand-sub">LAHORE &bull; 3D ATELIER</span>
+        </a>
+
+        <nav class="main-nav" aria-label="Primary">
+          <a href="#lookbook">Bridal &amp; Everyday</a>
+          <a href="#studio">3D Studio</a>
+          <a href="#collection">Collection</a>
+          <a href="#craft">Fabrics</a>
+          <button type="button" class="nav-link-btn" id="openSizeFinderNav">Fit &amp; Size Finder</button>
+        </nav>
+
+        <div class="header-actions">
+          <button type="button" class="ghost-pill" id="replayWelcomeBtn" title="Replay 3D Welcome">
+            ✦ Welcome
+          </button>
+          <button type="button" class="ghost-pill" id="openOrdersBtn">
+            Orders
+          </button>
+          <button type="button" class="ghost-pill" id="openSizeFinderBtn">
+            <span class="dot-indicator"></span>
+            Size Guide
+          </button>
+          <button type="button" class="member-pill" id="openAuthBtn">
+            <span class="member-avatar" id="memberAvatar">✦</span>
+            <span id="memberBtnLabel">Member Sign In</span>
+          </button>
+          <button type="button" class="bag-trigger" id="openCartBtn" aria-label="Open shopping bag">
+            <span>Bag</span>
+            <span class="bag-count" id="cartBadge">0</span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <!-- Hero + Instant 3D Preview -->
+      <section class="hero-section">
+        <div class="hero-grid">
+          <div class="hero-copy">
+            <p class="eyebrow">LAHORE &bull; KARACHI &bull; ISLAMABAD &mdash; 3D INTIMATES</p>
+            <h1>
+              A to Z bridal &amp; intimates,
+              <em>tailored in 360° color</em>
+            </h1>
+            <p class="hero-lead">
+              Everything from silk nighties, everyday bras &amp; lace panties to Shahi Maroon bridal
+              lehengas, Mehndi shararas, zardozi khussas, pearl heel sandals &amp; potli bags—with
+              <strong>10% OFF for everyone</strong>.
+            </p>
+            <div class="hero-cta-row">
+              <a href="#collection" class="btn-primary">Shop Collection</a>
+              <a href="#studio" class="btn-secondary">Enter 3D Studio</a>
+            </div>
+
+            <div class="hero-photo-strip">
+              <div class="hero-thumbs" id="heroPhotoThumbs"></div>
+              <div class="hero-thumbs-label">
+                <strong>100% Discreet Parcel + COD</strong>
+                <span>Click any piece to view in 3D &amp; related styles</span>
+              </div>
+            </div>
+
+            <div class="hero-metrics">
+              <div>
+                <strong>Cash on Delivery</strong>
+                <span>Nationwide Discreet Parcels</span>
+              </div>
+              <div>
+                <strong>30A – XXL</strong>
+                <span>Pakistani Inclusive Sizing</span>
+              </div>
+              <div>
+                <strong>360° Live</strong>
+                <span>3D Motion + Related Styles</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="hero-stage-card" id="heroStageCard">
+            <div class="stage-floating-top">
+              <span class="stage-chip">Interactive 3D Preview</span>
+              <span class="stage-hint">Drag to orbit &bull; Scroll to zoom</span>
+            </div>
+            <canvas id="heroCanvas" class="three-canvas" aria-label="Interactive 3D hero garment"></canvas>
+            <div class="hero-stage-bottom">
+              <div class="hero-swatch-strip" id="heroSwatchStrip" aria-label="Quick shade preview"></div>
+              <button type="button" class="mini-atelier-link" id="heroCustomizeBtn">
+                Open Item &amp; Related 3D &rarr;
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Real Photo Lookbook Mosaic (Click any photo to open 3D Item Modal + Related 3D Motion) -->
+      <section class="lookbook-section" id="lookbook">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">BRIDAL JAHEZ &amp; SUMMER COMFORT</p>
+            <h2>Click Any Piece to Open in 3D Motion</h2>
+          </div>
+          <p class="section-sub">
+            Select any lookbook card below to open its full 3D view, customize Pakistani shades and
+            fabrics, and explore related pieces spinning in live 3D motion.
+          </p>
+        </div>
+        <div class="lookbook-strip" id="lookbookStrip"></div>
+      </section>
+
+      <!-- Curated Collection Grid -->
+      <section class="collection-section" id="collection">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">A TO Z PAKISTANI WOMEN&apos;S BOUTIQUE &bull; 10% OFF FOR EVERYONE</p>
+            <h2>Shop Everything: Perfumes, Shirts, Baggy Trousers, Shoes, Shawls, Earrings &amp; Intimates</h2>
+          </div>
+          <div class="collection-controls-right">
+            <div class="search-az-bar">
+              <input
+                type="search"
+                id="catalogSearchInput"
+                placeholder="Search A–Z: fogg, splendor, janan, shirt, baggy, shoes, shawl, earrings..."
+                aria-label="Search products A to Z"
+              />
+              <button type="button" class="az-sort-btn" id="azSortBtn" title="Sort alphabetically A to Z">
+                A–Z Sort
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="filter-tabs" id="categoryFilters" role="tablist" aria-label="Filter collection" style="margin-bottom:1.6rem">
+          <button type="button" class="filter-tab active" data-category="all">All (A–Z)</button>
+          <button type="button" class="filter-tab" data-category="perfumes">Perfumes (Fogg, Splendor, Janan)</button>
+          <button type="button" class="filter-tab" data-category="clothes">Shirts, Baggy Trousers &amp; Pret</button>
+          <button type="button" class="filter-tab" data-category="shawls">Shawls</button>
+          <button type="button" class="filter-tab" data-category="footwear">Shoes &amp; Sandals</button>
+          <button type="button" class="filter-tab" data-category="accessories">Earrings, Potli &amp; Jewelry</button>
+          <button type="button" class="filter-tab" data-category="bridal-clothes">Bridal Lehenga &amp; Sharara</button>
+          <button type="button" class="filter-tab" data-category="nighties">Nighties &amp; Robes</button>
+          <button type="button" class="filter-tab" data-category="bras">Bras</button>
+          <button type="button" class="filter-tab" data-category="briefs">Panties &amp; Briefs</button>
+          <button type="button" class="filter-tab" data-category="sets">Bridal Jahez Sets</button>
+          <button type="button" class="filter-tab" data-category="bodysuits">Bodysuits</button>
+        </div>
+
+        <div class="collection-grid" id="collectionGrid"></div>
+      </section>
+
+      <!-- Interactive 3D Atelier Configurator -->
+      <section class="studio-section" id="studio">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">BESPOKE 3D COLOR CONFIGURATOR</p>
+            <h2>The Noor &amp; Silk 3D Fitting Studio</h2>
+          </div>
+          <p class="section-sub">
+            Customize any piece across Shahi Maroon, Rani Pink, Mehndi Emerald, and Nikkah Ivory in
+            Katan silk, bridal lace, or cooling cotton-modal.
+          </p>
+        </div>
+
+        <div class="studio-workspace">
+          <!-- Left: 3D Viewport -->
+          <div class="studio-viewport-shell">
+            <div class="viewport-toolbar-top">
+              <div class="product-switcher" id="studioProductPills" role="tablist" aria-label="Select 3D garment"></div>
+            </div>
+
+            <div class="viewport-canvas-wrap" id="studioCanvasWrap">
+              <canvas id="studioCanvas" class="three-canvas" aria-label="3D Garment Studio Canvas"></canvas>
+
+              <div class="viewport-overlay-left">
+                <div class="live-spec-pill" id="liveSpecPill">
+                  <span class="spec-swatch" id="liveSpecSwatch"></span>
+                  <span id="liveSpecText">Shahi Maroon &bull; Zardozi &amp; Chantilly Lace</span>
+                </div>
+              </div>
+
+              <div class="viewport-overlay-right">
+                <button type="button" class="icon-ctrl-btn active" id="toggleMannequinBtn">
+                  Form: On
+                </button>
+                <button type="button" class="icon-ctrl-btn active" id="toggleRotateBtn">
+                  Turntable: On
+                </button>
+                <button type="button" class="icon-ctrl-btn" id="toggleSeamsBtn">
+                  Seam Mesh
+                </button>
+              </div>
+            </div>
+
+            <div class="viewport-toolbar-bottom">
+              <div class="cam-presets" role="group" aria-label="Camera angles">
+                <span class="toolbar-label">Angle</span>
+                <button type="button" class="cam-btn active" data-cam="threeQuarter">3/4 Studio</button>
+                <button type="button" class="cam-btn" data-cam="front">Front</button>
+                <button type="button" class="cam-btn" data-cam="back">Back Clasp</button>
+                <button type="button" class="cam-btn" data-cam="closeup">Fabric Close-Up</button>
+              </div>
+
+              <div class="lighting-presets" role="group" aria-label="Studio lighting">
+                <span class="toolbar-label">Light</span>
+                <button type="button" class="light-btn active" data-light="atelier">Warm Atelier</button>
+                <button type="button" class="light-btn" data-light="daylight">Daylight</button>
+                <button type="button" class="light-btn" data-light="evening">Mehndi Evening</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right: Live Customizer & Purchase Panel -->
+          <aside class="studio-inspector" aria-label="Garment customization controls">
+            <div class="inspector-photo-banner">
+              <img id="studioPhotoPreview" src="/images/mehreen-bridal.jpg" alt="Selected studio piece" />
+              <div style="flex:1">
+                <div class="inspector-badge-row">
+                  <span class="badge-tag" id="studioBadge">Bridal Edit</span>
+                  <span class="rating-pill" id="studioRating">&#9733; 4.97 (284)</span>
+                </div>
+                <h3 id="studioTitle">Mehreen Bridal Jahez Set</h3>
+                <p class="inspector-subtitle" id="studioSubtitle">
+                  Shahi maroon Chantilly lace balconette &amp; matching brief
+                </p>
+              </div>
+            </div>
+
+            <div class="inspector-price-row">
+              <div class="price-discount-wrap">
+                <span class="price-display" id="studioPrice">Rs. 10,620</span>
+                <span class="price-original" id="studioOriginalPrice">Rs. 11,800</span>
+                <span class="discount-badge">10% OFF</span>
+              </div>
+              <span class="stock-note">COD Available &bull; Discreet Parcel</span>
+            </div>
+
+            <p class="inspector-desc" id="studioDescription"></p>
+
+            <!-- Colorway Selector -->
+            <div class="control-block">
+              <div class="control-label-row">
+                <span>Pakistani Shade Palette</span>
+                <strong id="selectedColorName">Shahi Maroon</strong>
+              </div>
+              <div class="swatch-grid" id="studioColorSwatches"></div>
+            </div>
+
+            <!-- Fabric Texture Selector -->
+            <div class="control-block">
+              <div class="control-label-row">
+                <span>Textile Finish</span>
+                <strong id="selectedFabricName">Zardozi &amp; Chantilly Lace</strong>
+              </div>
+              <div class="fabric-grid" id="studioFabricOptions"></div>
+            </div>
+
+            <!-- Hardware Selector -->
+            <div class="control-block">
+              <div class="control-label-row">
+                <span>Hardware &amp; Sliders</span>
+                <strong id="selectedHardwareName">Antique Gold</strong>
+              </div>
+              <div class="hardware-row" id="studioHardwareOptions"></div>
+            </div>
+
+            <!-- Size Selector -->
+            <div class="control-block">
+              <div class="control-label-row">
+                <span>Size</span>
+                <button type="button" class="inline-link-btn" id="studioSizeGuideBtn">
+                  Find my fit &rarr;
+                </button>
+              </div>
+              <div class="size-grid" id="studioSizeOptions"></div>
+              <p class="fit-note" id="studioFitNote"></p>
+            </div>
+
+            <div class="inspector-actions">
+              <button type="button" class="btn-primary full-width" id="addToBagBtn">
+                Add to Bag &mdash; <span id="addToBagPrice">Rs. 11,800</span>
+              </button>
+            </div>
+
+            <ul class="detail-bullets" id="studioDetailsList"></ul>
+          </aside>
+        </div>
+      </section>
+
+      <!-- Craft & Pakistani Promise -->
+      <section class="craft-section" id="craft">
+        <div class="craft-grid">
+          <div class="craft-card">
+            <span class="craft-num">01</span>
+            <h3>Summer Breathable Modal</h3>
+            <p>
+              Cool beechwood cotton-modal blends designed for Pakistani weather—invisible under fine
+              lawn kurtas, chiffon dupattas, and formal wear.
+            </p>
+          </div>
+          <div class="craft-card">
+            <span class="craft-num">02</span>
+            <h3>Bridal &amp; Jahez Craftsmanship</h3>
+            <p>
+              Rich Shahi Maroon, Nikkah Ivory, and Mehndi Emerald silk sets wrapped in complimentary
+              velvet keepsake boxes for bridal trousseaus.
+            </p>
+          </div>
+          <div class="craft-card">
+            <span class="craft-num">03</span>
+            <h3>100% Discreet COD Delivery</h3>
+            <p>
+              Every parcel ships in plain, unmarked packaging with no external product labels, with
+              Cash on Delivery, JazzCash, and EasyPaisa across Pakistan.
+            </p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <div>
+          <span class="brand-mark">NOOR &amp; SILK</span>
+          <p class="footer-copy">
+            Lahore &bull; Karachi &bull; Islamabad &mdash; Women's 3D Intimates &amp; Bridal
+            Trousseau Atelier.
+          </p>
+        </div>
+        <div class="footer-links">
+          <a href="#lookbook">Lookbook</a>
+          <a href="#collection">Collection</a>
+          <a href="#studio">3D Studio</a>
+          <button type="button" class="footer-btn" id="footerSizeBtn">Size Guide</button>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Opened Item Detail Modal with Live 3D View + Related Items in 3D Motion -->
+    <div class="modal-backdrop item-modal-backdrop" id="itemModalBackdrop" hidden>
+      <div class="item-detail-modal" role="dialog" aria-modal="true" aria-labelledby="modalItemTitle">
+        <button type="button" class="modal-float-close" id="closeItemModalBtn" aria-label="Close item view">
+          &times;
+        </button>
+
+        <div class="item-modal-top">
+          <!-- Left: Live Interactive 3D Stage & Real Photo Toggle -->
+          <div class="item-modal-visual" id="modal3dWrap">
+            <div class="modal-visual-bar">
+              <div class="modal-mode-pills">
+                <button type="button" class="mode-pill active" id="modalView3dBtn">3D Motion View</button>
+                <button type="button" class="mode-pill" id="modalViewPhotoBtn">Real Photo</button>
+              </div>
+              <div class="modal-cam-mini">
+                <button type="button" class="cam-mini-btn active" data-modal-cam="threeQuarter">360°</button>
+                <button type="button" class="cam-mini-btn" data-modal-cam="front">Front</button>
+                <button type="button" class="cam-mini-btn" data-modal-cam="back">Back</button>
+                <button type="button" class="cam-mini-btn" id="modalFormToggleBtn">Ghost</button>
+              </div>
+            </div>
+
+            <canvas id="modal3dCanvas" class="three-canvas" aria-label="Interactive 3D Item View"></canvas>
+            <img id="modalRealPhoto" class="modal-real-photo" src="" alt="" hidden />
+
+            <div class="modal-stage-caption">
+              <span id="modalLiveShadeText">Shahi Maroon &bull; Drag to rotate 360°</span>
+            </div>
+          </div>
+
+          <!-- Right: Details, PKR Price, Color/Fabric/Size & Add to Bag -->
+          <div class="item-modal-info">
+            <div class="inspector-badge-row">
+              <span class="badge-tag" id="modalBadge">Bridal Edit</span>
+              <span class="rating-pill" id="modalRating">&#9733; 4.97</span>
+            </div>
+            <h2 id="modalItemTitle">Mehreen Bridal Jahez Set</h2>
+            <p class="inspector-subtitle" id="modalItemSubtitle"></p>
+
+            <div class="modal-price-strip">
+              <div class="price-discount-wrap">
+                <span class="price-display" id="modalItemPrice">Rs. 10,620</span>
+                <span class="price-original" id="modalOriginalPrice">Rs. 11,800</span>
+                <span class="discount-badge">10% OFF</span>
+              </div>
+              <span class="cod-pill">COD &amp; Discreet Parcel</span>
+            </div>
+
+            <p class="inspector-desc" id="modalItemDesc"></p>
+
+            <div class="control-block">
+              <div class="control-label-row">
+                <span>Shade</span>
+                <strong id="modalColorName"></strong>
+              </div>
+              <div class="swatch-grid" id="modalColorSwatches"></div>
+            </div>
+
+            <div class="control-block">
+              <div class="control-label-row">
+                <span>Fabric</span>
+                <strong id="modalFabricName"></strong>
+              </div>
+              <div class="fabric-grid" id="modalFabricOptions"></div>
+            </div>
+
+            <div class="control-block">
+              <div class="control-label-row">
+                <span>Size</span>
+                <button type="button" class="inline-link-btn" id="modalSizeGuideBtn">Size Guide &rarr;</button>
+              </div>
+              <div class="size-grid" id="modalSizeOptions"></div>
+            </div>
+
+            <div class="modal-action-row">
+              <button type="button" class="btn-primary full-width" id="modalAddToBagBtn">
+                Add to Bag &mdash; <span id="modalAddPrice">Rs. 11,800</span>
+              </button>
+              <button type="button" class="btn-secondary" id="modalOpenInStudioBtn">
+                Full 3D Studio
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bottom: Related Items Spinning in Live 3D Motion -->
+        <div class="related-3d-section">
+          <div class="related-header">
+            <div>
+              <p class="eyebrow">COMPLETE YOUR LOOK</p>
+              <h3>Related Pieces in Live 3D Motion</h3>
+            </div>
+            <span class="related-hint">Click any rotating 3D piece to open it</span>
+          </div>
+          <div class="related-3d-grid" id="related3dGrid"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide-over Shopping Bag Drawer -->
+    <div class="drawer-backdrop" id="cartBackdrop" hidden></div>
+    <aside class="cart-drawer" id="cartDrawer" aria-label="Shopping Bag" aria-hidden="true">
+      <div class="drawer-header">
+        <div>
+          <p class="eyebrow">DISCREET PACKAGING</p>
+          <h3>Atelier Bag</h3>
+        </div>
+        <button type="button" class="close-btn" id="closeCartBtn" aria-label="Close bag">&times;</button>
+      </div>
+
+      <div class="perk-progress" id="perkProgress"></div>
+
+      <div class="cart-items" id="cartItemsContainer"></div>
+
+      <div class="cart-footer" id="cartFooter">
+        <div class="cart-summary-lines">
+          <div class="summary-line">
+            <span>Subtotal</span>
+            <span id="cartSubtotal">Rs. 0</span>
+          </div>
+          <div class="summary-line discount-line">
+            <span>10% Discount (For Everyone)</span>
+            <strong id="cartDiscount">-Rs. 0</strong>
+          </div>
+          <div class="summary-line">
+            <span>Nationwide Delivery</span>
+            <span id="cartShipping">Free</span>
+          </div>
+          <div class="subtotal-row total-final-row">
+            <span>Final Total</span>
+            <strong id="cartTotal">Rs. 0</strong>
+          </div>
+        </div>
+        <p class="tax-note">10% discount auto-applied &bull; Ships in plain unmarked packaging.</p>
+        <button type="button" class="btn-primary full-width" id="proceedCheckoutBtn">
+          Place Order (COD / JazzCash / Card)
+        </button>
+      </div>
+
+      <form class="checkout-panel" id="checkoutForm" hidden>
+        <button type="button" class="back-to-bag-btn" id="backToBagBtn">&larr; Back to Bag</button>
+        <h4>Pakistan Delivery Details</h4>
+        <label>
+          Full Name
+          <input type="text" name="customerName" required placeholder="Ayesha Khan" />
+        </label>
+        <label>
+          Mobile Number (for Courier Call)
+          <input type="tel" name="phone" required placeholder="0300-1234567" />
+        </label>
+        <div class="checkout-two-col">
+          <label>
+            City
+            <select name="city">
+              <option value="Lahore">Lahore</option>
+              <option value="Karachi">Karachi</option>
+              <option value="Islamabad">Islamabad</option>
+              <option value="Rawalpindi">Rawalpindi</option>
+              <option value="Faisalabad">Faisalabad</option>
+              <option value="Multan">Multan</option>
+              <option value="Peshawar">Peshawar</option>
+              <option value="Sialkot">Sialkot</option>
+            </select>
+          </label>
+          <label>
+            Payment Method
+            <select name="paymentMethod">
+              <option value="Cash on Delivery (COD)">Cash on Delivery (COD)</option>
+              <option value="JazzCash">JazzCash</option>
+              <option value="EasyPaisa">EasyPaisa</option>
+              <option value="Debit / Credit Card">Debit / Credit Card</option>
+            </select>
+          </label>
+        </div>
+        <label>
+          Delivery Address
+          <textarea
+            name="shippingAddress"
+            rows="2"
+            required
+            placeholder="House 14, Street 6, DHA Phase 5"
+          ></textarea>
+        </label>
+        <label>
+          Jahez / Gift Note (Optional)
+          <input type="text" name="giftNote" placeholder="Pack in discreet velvet bridal box" />
+        </label>
+        <button type="submit" class="btn-primary full-width">Confirm Order</button>
+      </form>
+
+      <div class="order-confirmation" id="orderConfirmation" hidden></div>
+    </aside>
+
+    <!-- Orders History Modal -->
+    <div class="modal-backdrop" id="ordersModalBackdrop" hidden>
+      <div class="size-modal orders-modal" role="dialog" aria-modal="true" aria-labelledby="ordersModalTitle">
+        <div class="drawer-header">
+          <div>
+            <p class="eyebrow">10% OFF APPLIED &bull; DISCREET DISPATCH</p>
+            <h3 id="ordersModalTitle">My Atelier Orders</h3>
+          </div>
+          <button type="button" class="close-btn" id="closeOrdersModalBtn" aria-label="Close orders">
+            &times;
+          </button>
+        </div>
+        <div class="orders-list" id="ordersListContainer"></div>
+      </div>
+    </div>
+
+    <!-- Fit & Size Atelier Modal -->
+    <div class="modal-backdrop" id="sizeModalBackdrop" hidden>
+      <div class="size-modal" role="dialog" aria-modal="true" aria-labelledby="sizeModalTitle">
+        <div class="drawer-header">
+          <div>
+            <p class="eyebrow">PERSONALIZED FIT</p>
+            <h3 id="sizeModalTitle">3D Fit &amp; Size Atelier</h3>
+          </div>
+          <button type="button" class="close-btn" id="closeSizeModalBtn" aria-label="Close size finder">
+            &times;
+          </button>
+        </div>
+
+        <form class="size-form" id="sizeFinderForm">
+          <div class="unit-toggle">
+            <label><input type="radio" name="unit" value="in" checked /> Inches</label>
+            <label><input type="radio" name="unit" value="cm" /> Centimeters</label>
+          </div>
+
+          <div class="size-inputs-grid">
+            <label>
+              Underbust (Ribcage)
+              <input type="number" step="0.5" name="underbust" value="32" required />
+            </label>
+            <label>
+              Overbust (Fullest Point)
+              <input type="number" step="0.5" name="overbust" value="35" required />
+            </label>
+            <label>
+              Full Hip (Optional)
+              <input type="number" step="0.5" name="hip" value="38" />
+            </label>
+            <label>
+              Fit Preference
+              <select name="fitPreference">
+                <option value="sculpted">Bridal Sculpted Lift</option>
+                <option value="relaxed">Summer Relaxed Comfort</option>
+              </select>
+            </label>
+          </div>
+
+          <button type="submit" class="btn-primary full-width">Calculate My Atelier Size</button>
+        </form>
+
+        <div class="size-result" id="sizeResultBox" hidden></div>
+      </div>
+    </div>
+
+    <!-- 3D Aesthetic Login & Member Atelier Modal -->
+    <div class="modal-backdrop auth-modal-backdrop" id="authModalBackdrop" hidden>
+      <div class="auth-3d-shell" id="auth3dShell" role="dialog" aria-modal="true" aria-labelledby="authHeading">
+        <button type="button" class="modal-float-close auth-close-btn" id="closeAuthModalBtn" aria-label="Close sign in">
+          &times;
+        </button>
+
+        <!-- Left: Live 3D Prism & Orbital Silk Showcase -->
+        <div class="auth-3d-stage" id="auth3dStage">
+          <div class="auth-stage-badge">
+            <span class="pulse-gem"></span>
+            <span>NOOR &amp; SILK &bull; PRIVATE ATELIER</span>
+          </div>
+
+          <canvas id="auth3dCanvas" class="three-canvas" aria-label="Interactive 3D Member Login Scene"></canvas>
+
+          <div class="auth-stage-footer">
+            <p class="auth-stage-quote">
+              &ldquo;Save your exact size, build your Jahez wishlist &amp; unlock priority discreet COD.&rdquo;
+            </p>
+            <div class="auth-theme-orbs" id="authThemeOrbs" aria-label="3D mood shade selector">
+              <button type="button" class="auth-orb active" style="background:#D9266B" data-orb-hex="#D9266B" data-orb-sheen="#FF99C8" title="Rani Pink"></button>
+              <button type="button" class="auth-orb" style="background:#8E1632" data-orb-hex="#8E1632" data-orb-sheen="#F48FA3" title="Shahi Maroon"></button>
+              <button type="button" class="auth-orb" style="background:#148F6E" data-orb-hex="#148F6E" data-orb-sheen="#9BF0D6" title="Mehndi Emerald"></button>
+              <button type="button" class="auth-orb" style="background:#7E22CE" data-orb-hex="#7E22CE" data-orb-sheen="#E9D5FF" title="Jamun Orchid"></button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: 3D Tilting Frosted Glass Form Card -->
+        <div class="auth-form-pane">
+          <div class="auth-glass-card" id="authGlassCard">
+            <!-- Signed-out View -->
+            <div id="authFormsWrap">
+              <div class="auth-header-block">
+                <p class="eyebrow">MEMBER ACCESS</p>
+                <h2 id="authHeading">Welcome to the Atelier</h2>
+                <p class="auth-sub">Sign in or join for tailored fit profiles &amp; bridal perks.</p>
+              </div>
+
+              <div class="auth-tabs" role="tablist">
+                <button type="button" class="auth-tab active" id="authTabLogin">Sign In</button>
+                <button type="button" class="auth-tab" id="authTabRegister">Join Atelier</button>
+              </div>
+
+              <!-- Sign In Form -->
+              <form class="auth-form" id="loginForm">
+                <div class="auth-field">
+                  <label for="loginEmail">Email or Mobile</label>
+                  <input id="loginEmail" name="email" type="text" required placeholder="ayesha@noorandsilk.pk" />
+                </div>
+
+                <div class="auth-field">
+                  <label for="loginPassword">Password</label>
+                  <div class="pw-input-wrap">
+                    <input id="loginPassword" name="password" type="password" required placeholder="••••••••" />
+                    <button type="button" class="pw-toggle-btn" data-toggle-pw="loginPassword">Show</button>
+                  </div>
+                </div>
+
+                <button type="submit" class="btn-primary full-width auth-submit-btn">
+                  Enter 3D Atelier &rarr;
+                </button>
+
+                <div class="auth-divider"><span>or quick preview</span></div>
+
+                <button type="button" class="demo-login-btn" id="demoLoginBtn">
+                  <span>✦</span> Instant Demo Sign In (Ayesha &bull; Lahore)
+                </button>
+              </form>
+
+              <!-- Register Form -->
+              <form class="auth-form" id="registerForm" hidden>
+                <div class="auth-two-col">
+                  <div class="auth-field">
+                    <label for="regName">Full Name</label>
+                    <input id="regName" name="name" type="text" required placeholder="Zoya Malik" />
+                  </div>
+                  <div class="auth-field">
+                    <label for="regPhone">Mobile (03xx)</label>
+                    <input id="regPhone" name="phone" type="tel" placeholder="0321-9876543" />
+                  </div>
+                </div>
+
+                <div class="auth-field">
+                  <label for="regEmail">Email Address</label>
+                  <input id="regEmail" name="email" type="email" required placeholder="zoya@example.com" />
+                </div>
+
+                <div class="auth-two-col">
+                  <div class="auth-field">
+                    <label for="regCity">City</label>
+                    <select id="regCity" name="city">
+                      <option value="Lahore">Lahore</option>
+                      <option value="Karachi">Karachi</option>
+                      <option value="Islamabad">Islamabad</option>
+                      <option value="Rawalpindi">Rawalpindi</option>
+                      <option value="Faisalabad">Faisalabad</option>
+                      <option value="Multan">Multan</option>
+                    </select>
+                  </div>
+                  <div class="auth-field">
+                    <label for="regSize">Preferred Size</label>
+                    <input id="regSize" name="preferredSize" type="text" value="34C / M" />
+                  </div>
+                </div>
+
+                <div class="auth-field">
+                  <label for="regPassword">Create Password</label>
+                  <div class="pw-input-wrap">
+                    <input id="regPassword" name="password" type="password" minlength="6" required placeholder="At least 6 characters" />
+                    <button type="button" class="pw-toggle-btn" data-toggle-pw="regPassword">Show</button>
+                  </div>
+                </div>
+
+                <button type="submit" class="btn-primary full-width auth-submit-btn">
+                  Create Member Profile &rarr;
+                </button>
+              </form>
+            </div>
+
+            <!-- Signed-in Profile View -->
+            <div class="auth-profile-view" id="authProfileView" hidden>
+              <div class="profile-crown">✦</div>
+              <p class="eyebrow" id="profileTierLabel">BRIDAL ATELIER VIP</p>
+              <h2 id="profileNameHeading">Ayesha Khan</h2>
+              <p class="auth-sub" id="profileEmailSub">ayesha@noorandsilk.pk</p>
+
+              <div class="profile-stats-grid">
+                <div class="profile-stat">
+                  <span>Saved Size</span>
+                  <strong id="profileSizeVal">34C / M</strong>
+                </div>
+                <div class="profile-stat">
+                  <span>City</span>
+                  <strong id="profileCityVal">Lahore</strong>
+                </div>
+                <div class="profile-stat">
+                  <span>Delivery</span>
+                  <strong>Priority COD</strong>
+                </div>
+              </div>
+
+              <div class="profile-perks">
+                <div>&#10003; Discreet unmarked packaging auto-enabled</div>
+                <div>&#10003; Checkout details pre-filled automatically</div>
+                <div>&#10003; Complimentary silk potli wash pouch on bridal orders</div>
+              </div>
+
+              <div class="profile-actions">
+                <button type="button" class="btn-primary full-width" id="profileContinueBtn">
+                  Continue Exploring 3D Studio
+                </button>
+                <button type="button" class="btn-secondary full-width" id="logoutBtn">
+                  Sign Out
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <script type="module" src="/js/app.js"></script>
+  </body>
+</html>

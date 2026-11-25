@@ -1,0 +1,24 @@
+{
+  "name": "selene-3d-intimates",
+  "version": "1.0.0",
+  "description": "SÉLÈNE — Interactive 3D Women's Intimates & Undergarments Atelier built with Node.js, Express, and Three.js",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "keywords": [
+    "3d",
+    "threejs",
+    "nodejs",
+    "express",
+    "ecommerce",
+    "intimates",
+    "lingerie"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.21.2",
+    "three": "^0.170.0"
+  }
+}
